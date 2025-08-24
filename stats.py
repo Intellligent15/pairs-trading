@@ -34,7 +34,7 @@ def _validate_log_prices(lp: pd.DataFrame) -> None:
 @dataclass(frozen=True)
 class EngleGrangerResult:
     """
-    Container for Engle–Granger outputs.
+    Container for Engle-Granger outputs.
     """
     alpha: float               # intercept from OLS
     beta: float                # hedge ratio (slope) from OLS
@@ -55,16 +55,16 @@ class EngleGrangerResult:
 def fit_engle_granger(
     log_prices: pd.DataFrame,
     train_window: int = 252,
-    adf_regression: str = "nc"  # "nc" = no constant (recommended for residuals)
+    adf_regression: str = "n"  # "n" = no constant (recommended for residuals)
 ) -> Tuple[EngleGrangerResult, pd.Series, pd.Series]:
     """
-    Run Engle–Granger two-step test on the last `train_window` rows of `log_prices`.
+    Run Engle-Granger two-step test on the last `train_window` rows of `log_prices`.
 
     Model: X_t = alpha + beta * Y_t + e_t
     - X := first column of `log_prices`
     - Y := second column of `log_prices`
     - OLS fit over the training window
-    - ADF test on residuals e_t (by default with regression="nc")
+    - ADF test on residuals e_t (by default with regression="n")
 
     Parameters
     ----------
@@ -72,8 +72,8 @@ def fit_engle_granger(
         2-column DataFrame (date-indexed, ascending) of log prices.
     train_window : int
         Number of most recent observations to use for OLS + ADF.
-    adf_regression : {"nc", "c", "ct", "ctt"}
-        ADF deterministic terms. Residuals are mean-zero by construction, so "nc" is typical.
+    adf_regression : {"n", "c", "ct", "ctt"}
+        ADF deterministic terms. Residuals are mean-zero by construction, so "n" is typical.
 
     Returns
     -------
@@ -142,10 +142,10 @@ def refit_on_window(
     log_prices: pd.DataFrame,
     start: Optional[pd.Timestamp] = None,
     end: Optional[pd.Timestamp] = None,
-    adf_regression: str = "nc"
+    adf_regression: str = "n"
 ) -> Tuple[EngleGrangerResult, pd.Series, pd.Series]:
     """
-    Fit Engle–Granger on an explicit [start:end] slice (inclusive by labels).
+    Fit Engle-Granger on an explicit [start:end] slice (inclusive by labels).
     Useful for walk-forward or diagnostics.
     """
     _validate_log_prices(log_prices)
