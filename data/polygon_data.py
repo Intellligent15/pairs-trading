@@ -6,11 +6,13 @@ import time
 import datetime as dt
 from dataclasses import dataclass
 from typing import Optional, Dict, Any, List
-from keys import POLYGON_API_KEY  # Ensure this is set in your environment
+# from keys import POLYGON_API_KEY  # Ensure this is set in your environment
 
 import requests
 import pandas as pd
 
+
+PolyKey = os.getenv("API_Poly")
 # -------- Helpers --------
 # Normalizes date inputs into strings Polygon accepts
 def _datestr(d: Optional[str | dt.date]) -> str:
@@ -22,7 +24,7 @@ def _datestr(d: Optional[str | dt.date]) -> str:
 
 @dataclass
 class PolygonClient:
-    api_key: str = POLYGON_API_KEY
+    api_key: str = PolyKey
     base_v2: str = "https://api.polygon.io/v2"
     base_v3: str = "https://api.polygon.io/v3"
     timeout: int = 20
